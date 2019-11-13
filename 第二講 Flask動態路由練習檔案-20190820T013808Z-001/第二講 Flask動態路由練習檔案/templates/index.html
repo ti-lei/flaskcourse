@@ -1,0 +1,35 @@
+{% extends 'shared/layout.html'%}
+<!-- 把下方 名字叫做 "body" 的 [block]  塞到 layout 的 [block] -->
+{% block body %}
+<header class=" jumbotron">
+    <h1>股票資訊</h1>
+    <p>{{stocklist}}</p>
+    <a href="/chart" class="btn btn-primary">檢視圖表</a>
+    <script> src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"</script>
+</header>
+<section>
+    <!-- 生成class的快速鍵是 "." 加上 class的名稱 -->
+    <!-- bootstrap4的快速生成是 b4- -->
+    <div class="container">
+        <div class="row">
+            <!-- 透過jinja 使用迴圈產生html -->
+            {%for stock in stocklist%}
+            <!-- col-md-4 就是 4/12 每塊擺三個 -->
+            <div class="col-md-3">
+                <!-- mb:margin botton 頁面的下方留白 後面跟的數字是要留多少-->
+                <div class="card mb-3">
+                    <img class="card-img-top" src="/static/images/{{ stock.id }}.jpg" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ stock.name }}</h4>
+                        <p class="card-text">{{ stock.id }}</p>
+                        <a href="/stock/{{ stock.id }}" class="btn btn-outline-primary">檢視詳情</a>
+
+                    </div>
+                </div>
+
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+</section>
+{% endblock %}

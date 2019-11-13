@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- 把 head.html include 進來 跟 繼承頁面的邏輯是反過來的 -->
+{% include 'shared/head.html' %}
+
+<body>
+    <h1>這是共用模板 Top</h1>
+    {% block body %}
+
+    <!-- 這裡就是要塞其他html想要繼承這個母模板的地方 -->
+
+    {% endblock %}
+    <h1>這是共用模板 Bottom</h1>
+</body>
+
+</html>

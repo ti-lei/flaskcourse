@@ -1,0 +1,53 @@
+{% extends 'shared/layout.html' %}
+{% block body%}
+<header class="jumbotron">
+    <h1>交易價比較圖表</h1>
+    <p>個股名單: {{ name_list }}</p>
+    <p>個股名單: {{ name_list | safe }}</p>
+    <p>交易清單: {{ price_list }}</p>
+
+</header>
+<section class="container">
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <script>
+
+        // javascript comment 要用 //
+        // javascript 命名第一個字小寫中間的字大寫
+        // 接收來自後端的name_list , | safe 的意思是不把傳入的符號解譯成unicode
+
+        var nameList = {{ name_list }};
+        var nameListreal = {{ name_list | safe }}
+
+        var priceList = {{ price_list | safe }};
+        var colorList = {{ color_list | safe }};
+
+        // note: 有些版本的 vs code 在存檔時會自動把 [jinja] 的 雙括號 做換行
+        // 這時候要用下列的語法操作
+        // var nameList = JSON.parse("{{ name_list | safe }}");
+
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: nameList,
+                datasets: [{
+                    label: '# of Votes',
+                    data: priceList,
+                    backgroundColor: colorList,
+                    borderColor: colorList,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</section>
+{% endblock %}

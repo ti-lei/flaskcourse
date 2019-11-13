@@ -1,0 +1,80 @@
+{% extends 'shared/layout.html' %}
+{% block body %}
+
+<!-- background-size: cover : 將圖片延伸而不是重複排列 -->
+<!-- border-radius: 0px; 把border的小圓角拿掉 -->
+<style>
+    .jumbotron {
+        background-size: cover;
+        border-radius: 0px;
+    }
+
+    .jumbotron h1 {
+        text-shadow: 0px 5px 20px black;
+    }
+</style>
+
+<!-- text-white :把文字改成白色 -->
+<!-- background-imag : 將圖片放在背景 -->
+<header class='jumbotron text-white' style="background-image: url({{ product.img_url }});">
+
+    <div class="container">
+        <h1>{{ product.title }}</h1>
+    </div>
+</header>
+<!-- container 是左右留白 -->
+<section class='container'>
+
+    <h3>Price:${{ product.price }}</h3>
+    <h3>Category: {{ product.category}}</h3>
+    <p>{{ product.description }}</p>
+    <a href="/" class="btn btn-primary">back</a>
+
+    <form method="POST" class="card mt-3">
+        <!-- hidden_tag() 會送一把鑰匙給後端 讓這個表單可以把資料post給後端 -->
+        <!-- 鑰匙是在 app.py 由 app.config['SECRET_KEY'] = 'NTU' 產生 -->
+        {{create_comment_form.hidden_tag()}}
+
+        <!-- class: card 會物件好好地排好 善加利用 -->
+        <div class="card-header">Create a comment</div>
+        <div class="card-body">
+            <div class="formgroup">
+                {{ create_comment_form.email.label}}
+                <!-- type: email 使用前端把該資料限定填寫email -->
+                {{ create_comment_form.email(class='form-control', type='email') }}
+            </div>
+            <div class="formgroup">
+                {{ create_comment_form.content.label }}
+                {{ create_comment_form.content(class='form-control') }}
+            </div>
+            <div class="formgroup mt-3">
+                {{ create_comment_form.submit(class='btn btn-primary') }}
+            </div>
+        </div>
+    </form>
+
+    <!-- 把 過去的 comment 丟出來 -->
+    {% for comment in comments %}
+    <div class="card mt-3">
+        <div class="card-header">
+            {{ comment.email }}
+        </div>
+        <div class="card-body">
+            <p>{{comment.content}}</p>
+        </div>
+    </div>
+
+    <!-- 這裡是將過去的留言更新的地方 -->
+    <form method="POST">
+        {{ comment.form.hidden_tag() }}
+        <div class="form-group">
+            <h4>{{ comment.form.content.label }}</h4>
+            {{ comment.form.content(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ comment.form.submit(class='btn btn-warning') }}
+        </div>
+    </form>
+    {% endfor %}
+</section>
+{% endblock %}

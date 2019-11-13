@@ -1,0 +1,70 @@
+{% extends 'shared/layout.html' %}
+{% block body %}
+<header class="jumbotron">
+    <div class="container">
+        <h1>Create Product</h1>
+    </div>
+</header>
+<section>
+    <div class="container">
+        <h2>Fill the form below to create a product</h2>
+        <!-- TODO: 顯示表單 -->
+
+        <form method="POST">
+            <!-- 表單CSRF TOKEN -->
+            {{ form.hidden_tag()}}
+
+            <!-- form-group 可以讓表格之間留白 -->
+            <div class="form-group">
+                <!-- 在form.py 裡的 StringField 後面跟的第一個參數 -->
+                <!-- form.欄位名稱.label 是給使用者提示這個欄位要放什麼 -->
+                {{ form.title.label }}
+                <!-- 要引用bootstrap的class 放小括號然後把class的名字放進去 -->
+                {{ form.title(class = 'form-control') }}
+            </div>
+
+            <div class="form-group">
+                {{ form.img_url.label }}
+                <!-- 要引用bootstrap的class 放小括號然後把class的名字放進去 -->
+                <!-- value 屬性給一個預設值 -->
+                {{ form.img_url(class = 'form-control', value = 'https://picsum.photos/id/1042/800/300') }}
+            </div>
+
+            <div class="form-group">
+                {{ form.price.label }}
+                <!-- 要引用bootstrap的class 放小括號然後把class的名字放進去 -->
+                {{ form.price(class = 'form-control') }}
+                {% if 'price' in form.errors %}
+                {% for err in form.errors.price %}
+                <p class="text-danger">{{ err }}</p>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.category.label }}
+                <!-- 要引用bootstrap的class 放小括號然後把class的名字放進去 -->
+                {{ form.category(class = 'form-control') }}
+            </div>
+
+            <div class="form-group">
+                {{ form.description.label }}
+                <!-- 要引用bootstrap的class 放小括號然後把class的名字放進去 -->
+                {{ form.description(class = 'form-control') }}
+            </div>
+
+            <div class="form-group">
+                {{ form.on_sale.label }}
+                <!-- 要引用bootstrap的class 放小括號然後把class的名字放進去 -->
+                {{ form.on_sale }}
+            </div>
+
+
+            <div class="form-group">
+                {{ form.submit(class = 'btn btn-primary') }}
+            </div>
+
+        </form>
+    </div>
+</section>
+{% endblock %}

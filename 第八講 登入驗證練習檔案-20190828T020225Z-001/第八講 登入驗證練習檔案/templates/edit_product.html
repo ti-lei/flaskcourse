@@ -1,0 +1,61 @@
+{% extends 'shared/layout.html' %}
+{% block body %}
+<header class="jumbotron">
+    <div class="container">
+        <h1>Edit Product</h1>
+    </div>
+</header>
+<section>
+    <div class="container">
+        <h2>Fill the form below to update this product</h2>
+        <!-- 顯示編輯表單 -->
+        <form method="POST">
+            <!-- 表單CSRF Token -->
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.title.label }}
+                {{ form.title(class='form-control') }}
+            </div>
+            <div class="form-group">
+                {{ form.img_url.label }}
+                {{ form.img_url(class='form-control') }}
+            </div>
+            <div class="form-group">
+                {{ form.price.label }}
+                {{ form.price(class='form-control') }}
+                {% if 'price' in form.errors %}
+                {% for err in form.errors.price %}
+                <p class="text-danger">{{ err }}</p>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.category.label }}
+                {{ form.category(class='form-control') }}
+            </div>
+            <div class="form-group">
+                {{ form.description.label }}
+                {{ form.description(class='form-control') }}
+            </div>
+            <div class="form-group">
+                {{ form.on_sale.label }}
+                {{ form.on_sale() }}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class='btn btn-primary') }}
+            </div>
+        </form>
+        <!-- 刪除表單 -->
+        <form method="POST" class="card">
+            {{ delete_form.hidden_tag() }}
+            <div class="card-header">Danger zone</div>
+            <div class="card-body">
+                {{ delete_form.confirm.label }}
+                {{ delete_form.confirm }}
+                <br>
+                {{ delete_form.submit(class='btn btn-danger') }}
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

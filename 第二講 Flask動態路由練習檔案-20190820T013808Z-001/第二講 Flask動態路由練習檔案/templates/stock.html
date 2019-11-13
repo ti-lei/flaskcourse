@@ -1,0 +1,18 @@
+{% extends 'shared/layout.html'%}
+<!-- 把下方 名字叫做 "body" 的 [block]  塞到 layout 的 [block] -->
+{% block body %}
+<header class=" jumbotron">
+    <h1>股票資訊</h1>
+    <!-- <p>{{stocklist}}</p> -->
+
+</header>
+<!-- width = 100% 滿版 -->
+<img width="100%" src="/static/images/{{ stock.id }}.jpg">
+<!-- container 主要是在左右留白 py-5是上下留白 -->
+<section class="container py-5">
+    <h1>{{ stock.name }}</h1>
+    <h3>成交價: {{ stock.price }}</h3>
+    <h3>買價: {{ stock.bid }}</h3>
+    <a class="btn btn-primary" href="/">回到首頁</a>
+</section>
+{% endblock %}

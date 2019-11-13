@@ -1,0 +1,38 @@
+{% extends 'shared/layout.html' %}
+{% block body %}
+<header class="jumbotron">
+    <div class="container">
+        <h1>Home</h1>
+    </div>
+</header>
+<section>
+    <!-- container > row > colom bootstrap的前端格式通常都是用這個順序包起來默認設定 -->
+    <!-- container 是旁邊橫幅留白 不是全幅 -->
+    <!-- 如果要東西一排一排 排好一定要有row -->
+    <div class="container">
+        <h2>Products</h2>
+        {{ products }}
+        <div class="row">
+            <!-- products 的資料型態為一個 list 包住多個 dictionary -->
+            {% for product in products %}
+            <div class="col-md-4">
+                <!-- 快捷鍵 b4-card-default -->
+                <!-- mb-3 : margin bottom 3級空白 -->
+                <div class="card mb-3">
+                    <img class="card-img-top" src="{{ product.img_url }}" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ product.title }}</h4>
+                        <p class="card-text">$ {{ product.price }} NTD</p>
+
+                        <!-- 快速鍵 a.btn.btn-primary*2 產生兩組button -->
+                        <!-- product.id 的路由對應到單一文件 -->
+                        <a href="/product/{{ product.id }}" class="btn btn-primary">Details</a>
+                        <a href="/product/{{ product.id }}/edit" class="btn btn-warning">Edit</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

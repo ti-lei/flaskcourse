@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <!-- bootstrap.css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- 導覽列 -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">My Website</a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+            aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/create_product">Create Product</a>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="modal" data-target="#loginModal" class="nav-link" href="/">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="modal" data-target="#signUpModal" class="nav-link" href="/">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a id="logoutBtn" class="nav-link">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- 一次性訊息 -->
+    {% with msgs = get_flashed_messages(with_categories=True) %}
+    {% for alert_type, msg in msgs: %}
+    <div class="alert alert-{{ alert_type }} mb-0 alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endwith %}
+
+    {% block body %}
+
+    {% endblock %}
+
+    <!-- loginModal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="loginForm" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" name="loginEmail" id="loginEmail" class="form-control"
+                            placeholder="Please enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" name="loginPassword" id="loginPassword" class="form-control"
+                            placeholder="Please enter your password" minlength="6" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- loginModal end -->
+    <!-- signUpModal -->
+    <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="signUpForm" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sign Up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="signUpEmail">Email</label>
+                        <input type="email" name="signUpEmail" id="signUpEmail" class="form-control"
+                            placeholder="Please enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signUpPassword">Password</label>
+                        <input type="password" name="signUpPassword" id="signUpPassword" class="form-control"
+                            placeholder="Please enter your password" minlength="6" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- signUpModal end -->
+    <!-- jquery.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <!-- bootstrap.js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- axios.js 前端傳送資料的library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-auth.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCeVuTjrBPES45TKuiUZUaRymQiJyHyxqw",
+            authDomain: "ntu-layx.firebaseapp.com",
+            databaseURL: "https://ntu-layx.firebaseio.com",
+            projectId: "ntu-layx",
+            storageBucket: "ntu-layx.appspot.com",
+            messagingSenderId: "916303912227",
+            appId: "1:916303912227:web:e5f679eb6f8aefcd"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+        //JS
+        //取得後端傳遞的CSRF, 使用 csrf_token() 取用已經分配好的 csrf
+        const csrf = '{{ csrf_token() }}';
+        //印出 csrf
+        console.log('csrf:', csrf);
+        // 建立 axios 與後端溝通的設定
+        const axiosSettings = {
+            // header 要記得 加 s , 是 標準規範
+            'headers': {
+                'x-csrf-token': csrf
+            }
+        };
+        $('#loginForm').submit(function (event) {
+            event.preventDefault();
+            console.log('[開始登入]')
+            const email = $('#loginEmail').val();
+            const password = $('#loginPassword').val();
+            console.log('[email]', email);
+            console.log('[password]', password);
+            // 在前端登入 
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                // 成功的時候做的事
+                .then(function (res) {
+                    console.log('成功', res);
+                    // 從res使用getIdToken()函數取得idToken
+                    res.user.getIdToken()
+                        .then(function (idToken) {
+                            console.log('idToken', idToken);
+                            console.log('axiosSettings', axiosSettings)
+                            // 把idToken傳送到後端 /login 路徑
+                            axios.post(
+                                '/api/login',
+                                { 'idToken': idToken },
+                                axiosSettings
+                            )
+                                .then(function (res) {
+                                    console.log('後端成功登入', res)
+                                })
+                                .catch(function (err) {
+                                    console.log('後端登入失敗', err)
+                                    console.log(err.response)
+                                });
+
+                        })
+                })
+                // 失敗的時候做的事
+                .catch(function (err) {
+                    console.log('失敗', err);
+                });
+
+            /*
+                        // 建立一個物件, 像是python 的 字典 準備發送給後端的資料
+                        const testData = {
+                            email: email
+                        };
+                        // 發送至後端
+                        axios.post('/hello', testData, axiosSettings)
+                            .then(function (res) {
+                                console.log('成功', res);
+                            })// 成功的時候做的事
+                            .catch(function (err) {
+                                console.log('失敗', err);
+                            });//失敗的時候做的事
+                            */
+        });
+
+        $('#signUpForm').submit(function (event) {
+            event.preventDefault();
+            console.log('[開始註冊]');
+            const email = $('#signUpEmail').val();
+            const password = $('#signUpPassword').val();
+            console.log('[email]', email);
+            console.log('[password]', password);
+        });
+
+        $('#logoutBtn').click(function () {
+            console.log('[開始登出]')
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+{% extends 'shared/layout.html' %}
+{% block body %}
+<style>
+    .jumbotron {
+        background-size: cover;
+        border-radius: 0px;
+    }
+
+    .jumbotron h1 {
+        text-shadow: 0px 5px 20px black;
+    }
+</style>
+<header class="jumbotron text-white" style="background-image: url({{ product.img_url }});">
+    <div class="container">
+        <h1>{{ product.title }}</h1>
+    </div>
+</header>
+<section class="container">
+    <h3>Price: ${{ product.price }}</h3>
+    <h3>Category: {{ product.category }}</h3>
+    <p>{{ product.description }}</p>
+    <a href="/" class="btn btn-primary">Back</a>
+
+    <form method="POST" class="card mt-3">
+        {{ create_comment_form.hidden_tag() }}
+        <div class="card-header">Create a comment</div>
+        <div class="card-body">
+            <div class="form-group">
+                {{ create_comment_form.email.label }}
+                {{ create_comment_form.email(class='form-control', type='email') }}
+            </div>
+            <div class="form-group">
+                {{ create_comment_form.content.label }}
+                {{ create_comment_form.content(class='form-control') }}
+            </div>
+            <div class="form-group">
+                {{ create_comment_form.submit(class='btn btn-primary') }}
+            </div>
+        </div>
+    </form>
+
+    {% for comment in comments %}
+    <div class="card mt-3">
+        <div class="card-header">
+            {{ comment.email }}
+        </div>
+        <div class="card-body">
+            <p>{{ comment.content }}</p>
+
+            <form method="POST">
+                {{ comment.form.hidden_tag() }}
+                <div class="form-group">
+                    {{ comment.form.content.label }}
+                    {{ comment.form.content(class='form-control') }}
+                </div>
+                <div class="form-group">
+                    {{ comment.form.submit(class='btn btn-warning') }}
+                </div>
+            </form>
+
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}
